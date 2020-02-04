@@ -1,4 +1,4 @@
-
+import firebase from 'firebase';
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -10,11 +10,35 @@ import {
   Image,
   Alert
 } from 'react-native';
+
 const temail = "osama";
 const tpassword = "osama";
 //const variable = email.value;
 export default class LoginView extends Component {
 
+  // componentWillMount() {
+  //   var firebaseConfig = {
+  //     apiKey: "AIzaSyAlPYoAWGqoVWeSl-YQTHTE84nJWQwJyIM",
+  //     authDomain: "reactnativeproject-65a35.firebaseapp.com",
+  //     databaseURL: "https://reactnativeproject-65a35.firebaseio.com",
+  //     projectId: "reactnativeproject-65a35",
+  //     storageBucket: "reactnativeproject-65a35.appspot.com",
+  //     messagingSenderId: "1021375818192",
+  //     appId: "1:1021375818192:web:3b6fba756b9c84e33871d5"
+  //   };
+  //   // Initialize Firebase
+  //   firebase.initializeApp(firebaseConfig);
+  // }
+  // firebase.database().ref('users/001').set(
+  //   {
+  //     email: "osama.habib@yahoo.com",
+  //     password: "osama"
+  //   }
+  // ).then(() => {
+  //   console.log("Inserted");
+  // }).catch((error) => {
+  //   console.log(error);
+  // });
 
 
   constructor(props) {
