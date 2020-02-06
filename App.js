@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -11,40 +11,26 @@ import {
   Alert
 } from 'react-native';
 
-const temail = "osama";
-const tpassword = "osama";
-//const variable = email.value;
+//import Login from './pages/Login';
+import axios from 'axios';
+//import routes from './Routed';
+// const temail = "osama";
+// const tpassword = "osama";
 export default class LoginView extends Component {
-
-  // componentWillMount() {
-  //   var firebaseConfig = {
-  //     apiKey: "AIzaSyAlPYoAWGqoVWeSl-YQTHTE84nJWQwJyIM",
-  //     authDomain: "reactnativeproject-65a35.firebaseapp.com",
-  //     databaseURL: "https://reactnativeproject-65a35.firebaseio.com",
-  //     projectId: "reactnativeproject-65a35",
-  //     storageBucket: "reactnativeproject-65a35.appspot.com",
-  //     messagingSenderId: "1021375818192",
-  //     appId: "1:1021375818192:web:3b6fba756b9c84e33871d5"
-  //   };
-  //   // Initialize Firebase
-  //   firebase.initializeApp(firebaseConfig);
-  // }
-  // firebase.database().ref('users/001').set(
-  //   {
-  //     email: "osama.habib@yahoo.com",
-  //     password: "osama"
-  //   }
-  // ).then(() => {
-  //   console.log("Inserted");
-  // }).catch((error) => {
-  //   console.log(error);
-  // });
-
-
   constructor(props) {
     super(props);
-    this.state = { email: '', password: '' }
+    this.state = { email: '', password: '', response: "Hello world" }
+    this._onChangeEmail = this._onChangeEmail.bind(this)     //binding these components
+    this._onChangePassword = this._onChangePassword.bind(this)
+  }
 
+
+  _onChangeEmail(email) {
+    this.setState(Object.assign({}, state, { email })); // good practice for immutability
+  }
+
+  _onChangePassword(password) {
+    this.setState(Object.assign({}, state, { password })); // good practice for immutability
   }
 
 
@@ -57,19 +43,25 @@ export default class LoginView extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View>
+          <Text>{this.state.response}</Text>
+        </View>
         <View style={styles.inputContainer}>
+
           <Image style={styles.inputIcon} source={{ uri: 'https://png.icons8.com/message/ultraviolet/50/3498db' }} />
           <TextInput style={styles.inputs}
             name="email"
             placeholder="Email"
             keyboardType="email-address"
             underlineColorAndroid='transparent'
-
+            //onChangeText={this._onChangeEmail}     //passing to user components as props
             onChangeText={(email) => this.setState({ email })}
             value={this.state.email}
 
           />
         </View>
+
+
 
         <View style={styles.inputContainer}>
           <Image style={styles.inputIcon} source={{ uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db' }} />
@@ -77,12 +69,13 @@ export default class LoginView extends Component {
             placeholder="Password"
             secureTextEntry={true}
             underlineColorAndroid='transparent'
+            //onChangeText={this._onChangePassword}    //passing to user components as props
             onChangeText={(password) => this.setState({ password })}
             value={this.state.password} />
         </View>
 
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} //onPress={() => this.onClickListener('login')}
-          onPress={() => this.validation()}
+        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
+          onPress={this.connect}
         >
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
@@ -94,15 +87,41 @@ export default class LoginView extends Component {
         <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('register')}>
           <Text>Register</Text>
         </TouchableHighlight>
+
+
       </View>
+
+
     );
   }
+
+
+  connect = () => {
+    const url = "http://192.168.10.3:3000/api/add";
+    const email_data = {
+      email: "osama.habib@yahoo.com"
+    }
+    axios.post(url, email_data).then(res => console.log(res.data));
+    // fetch(url).then(response => {
+    //   if (response.status == 200) {
+    //     return response.text();
+    //   }
+    //   else {
+    //     throw new Error("wrong");
+    //   }
+    // }).then(responseText => {
+    //   this.setState({ response: responseText });
+    // }).catch(error => {
+    //   console.error(error.message);
+    // });
+  }
+
+
 
 
   validation = () => {
     this.state.email === temail && this.state.password === tpassword ? Alert.alert('', 'Login Successful') :
       Alert.alert('', 'Incorrect Email or password');
-    // ? Alert.alert('', 'Valid') : Alert.alert('', 'Error');
   }
 
 }
