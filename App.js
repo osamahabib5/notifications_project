@@ -95,13 +95,30 @@ export default class LoginView extends Component {
     );
   }
 
-
   connect = () => {
-    const url = "http://192.168.10.3:3000/api/add";
-    const email_data = {
-      email: "osama.habib@yahoo.com"
-    }
-    axios.post(url, email_data).then(res => console.log(res.data));
+    const email_data = JSON.stringify({
+      email: this.state.email,
+      password: this.state.password
+    });
+    const url = "http://192.168.10.6:3000/api/add?data=" + email_data + "";
+
+    fetch(url)
+      .then(response => {
+        if (response.status == 200) {
+          return response.text();
+        }
+        else {
+          throw new Error("wrong");
+        }
+      }).then(responseText => {
+        this.setState({ response: responseText });
+      }).catch(error => {
+        console.error(error.message);
+      });
+    this.setState({
+      email: '',
+      password: ''
+    })
     // fetch(url).then(response => {
     //   if (response.status == 200) {
     //     return response.text();
