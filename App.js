@@ -8,40 +8,32 @@ import {
   Button,
   TouchableHighlight,
   Image,
-  Alert
+  Alert, AppRegistry, Navigator
 } from 'react-native';
-
-//import Login from './pages/Login';
+import SignupForm from './components/signupform';
 import axios from 'axios';
-//import routes from './Routed';
-// const temail = "osama";
-// const tpassword = "osama";
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     backgroundColor: '#36485f',
+//     paddingLeft: 60,
+//     paddingRight: 60,
+//   }
+// })
+
 export default class LoginView extends Component {
   constructor(props) {
     super(props);
     this.state = { email: '', password: '', response: "Hello world" }
-    this._onChangeEmail = this._onChangeEmail.bind(this)     //binding these components
-    this._onChangePassword = this._onChangePassword.bind(this)
-  }
-
-
-  _onChangeEmail(email) {
-    this.setState(Object.assign({}, state, { email })); // good practice for immutability
-  }
-
-  _onChangePassword(password) {
-    this.setState(Object.assign({}, state, { password })); // good practice for immutability
-  }
-
-
-
-  onClickListener = (viewId) => {
-    Alert.alert("Alert", "Button pressed " + viewId);
 
   }
+
 
   render() {
     return (
+
       <View style={styles.container}>
         <View>
           <Text>{this.state.response}</Text>
@@ -75,7 +67,7 @@ export default class LoginView extends Component {
         </View>
 
         <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
-          onPress={this.connect}
+          onPress={this.validatelogin}
         >
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
@@ -84,7 +76,7 @@ export default class LoginView extends Component {
           <Text>Forgot your password?</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('register')}>
+        <TouchableHighlight style={styles.buttonContainer}>
           <Text>Register</Text>
         </TouchableHighlight>
 
@@ -95,12 +87,13 @@ export default class LoginView extends Component {
     );
   }
 
-  connect = () => {
+  //validate email and password
+  validatelogin = () => {
     const email_data = JSON.stringify({
       email: this.state.email,
       password: this.state.password
     });
-    const url = "http://192.168.10.6:3000/api/add?data=" + email_data + "";
+    const url = "http://192.168.10.8:3000/api/add?data=" + email_data + "";
 
     fetch(url)
       .then(response => {
@@ -119,26 +112,6 @@ export default class LoginView extends Component {
       email: '',
       password: ''
     })
-    // fetch(url).then(response => {
-    //   if (response.status == 200) {
-    //     return response.text();
-    //   }
-    //   else {
-    //     throw new Error("wrong");
-    //   }
-    // }).then(responseText => {
-    //   this.setState({ response: responseText });
-    // }).catch(error => {
-    //   console.error(error.message);
-    // });
-  }
-
-
-
-
-  validation = () => {
-    this.state.email === temail && this.state.password === tpassword ? Alert.alert('', 'Login Successful') :
-      Alert.alert('', 'Incorrect Email or password');
   }
 
 }

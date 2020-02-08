@@ -6,7 +6,6 @@ var index = require('./routes/index');
 var bookings = require('./routes/bookings');
 
 var app = express();
-
 var port = 3000;
 
 app.listen(port, function () {
