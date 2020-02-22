@@ -10,10 +10,11 @@ import {
   Image,
   Alert, AppRegistry, Navigator
 } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import SignupForm from './components/signupform';
 import axios from 'axios';
-//import Expo from 'expo';
+import Expo from 'expo';
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -25,15 +26,19 @@ import axios from 'axios';
 //   }
 // })
 
-export default class LoginView extends Component {
+export default class LoginView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { email: '', password: '', response: "Hello world" }
+    this.state = {
+      email: '', password: '', response: "Hello world",
+      navigate: {
+        my_navigation: this.props.navigation
+      }
+    }
 
   }
-
-
   render() {
+    //const { navigation } = this.props.navigation;
     return (
 
       <View style={styles.container}>
@@ -80,7 +85,7 @@ export default class LoginView extends Component {
         </TouchableHighlight>
 
         <TouchableHighlight style={styles.buttonContainer}
-          onPress={this.signup}>
+          onPress={() => this.props.navigation.navigate('SignUp')}>
           <Text>Register</Text>
         </TouchableHighlight>
 
@@ -122,16 +127,21 @@ export default class LoginView extends Component {
   }
 
   //signupform
-  signup = () => {
-
-  }
 }
 
+const Stack = createStackNavigator();
 
 
 class App extends React.Component {
   render() {
-    return <LoginView />;
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={LoginView} />
+          <Stack.Screen name="SignUp" component={SignupForm} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
   }
 }
 
