@@ -6,7 +6,7 @@ var mongojs = require("mongojs");
 var db = mongojs("mongodb://127.0.0.1:27017/project_db", ["users"]);
 
 //api to check email and password validation
-router.get("/add", function (req, res) {
+router.get("/verifylogin", function (req, res) {
     var responsestring = JSON.parse(req.query.data);
     var getemail = responsestring.email;
     var getpassword = responsestring.password;
@@ -25,9 +25,13 @@ router.get("/add", function (req, res) {
             else {
                 res.send("Login Successful!");
             }
-
         }
     });
 });
+
+//addding new user 
+router.get("/signup"), function (req, res) {
+    console.log(req.query.reg_data);
+}
 
 module.exports = router;

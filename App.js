@@ -10,8 +10,10 @@ import {
   Image,
   Alert, AppRegistry, Navigator
 } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 import SignupForm from './components/signupform';
 import axios from 'axios';
+//import Expo from 'expo';
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -35,6 +37,7 @@ export default class LoginView extends Component {
     return (
 
       <View style={styles.container}>
+
         <View>
           <Text>{this.state.response}</Text>
         </View>
@@ -76,9 +79,11 @@ export default class LoginView extends Component {
           <Text>Forgot your password?</Text>
         </TouchableHighlight>
 
-        <TouchableHighlight style={styles.buttonContainer}>
+        <TouchableHighlight style={styles.buttonContainer}
+          onPress={this.signup}>
           <Text>Register</Text>
         </TouchableHighlight>
+
 
 
       </View>
@@ -93,7 +98,7 @@ export default class LoginView extends Component {
       email: this.state.email,
       password: this.state.password
     });
-    const url = "http://192.168.10.8:3000/api/add?data=" + email_data + "";
+    const url = "http://192.168.10.7:3000/api/verifylogin?data=" + email_data + "";
 
     fetch(url)
       .then(response => {
@@ -104,7 +109,9 @@ export default class LoginView extends Component {
           throw new Error("wrong");
         }
       }).then(responseText => {
-        this.setState({ response: responseText });
+        this.setState({
+          response: responseText
+        });
       }).catch(error => {
         console.error(error.message);
       });
@@ -114,7 +121,22 @@ export default class LoginView extends Component {
     })
   }
 
+  //signupform
+  signup = () => {
+
+  }
 }
+
+
+
+class App extends React.Component {
+  render() {
+    return <LoginView />;
+  }
+}
+
+
+
 
 const styles = StyleSheet.create({
   container: {

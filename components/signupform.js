@@ -2,27 +2,53 @@ import React from 'react';
 import {
     StyleSheet, View, Text, TextInput, TouchableOpacity
 } from 'react-native';
-
+import axios from 'axios';
 export default class SignupForm extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state({
+            name: '',
+            email: '',
+            password: ''
+        })
+    }
     render() {
         return (
             <View style={styles.regform}>
                 <Text style={styles.header}>Registration</Text>
                 <TextInput style={styles.textinput} placeholder="Your Name"
-                    underlineColorAndroid={'transparent'}></TextInput>
+                    onChangeText={(name) => this.setState({ name })}
+                    value={this.state.name} underlineColorAndroid={'transparent'}></TextInput>
 
                 <TextInput style={styles.textinput} placeholder="Email"
-                    underlineColorAndroid={'transparent'}></TextInput>
+                    onChangeText={(email) => this.setState({ email })}
+                    value={this.state.email} underlineColorAndroid={'transparent'}></TextInput>
 
                 {/* securetextentry to ensure you dont see the pw */}
                 <TextInput style={styles.textinput} placeholder="Password"
-                    secureTextEntry={true} underlineColorAndroid={'transparent'}></TextInput>
+                    onChangeText={(password) => this.setState({ password })}
+                    value={this.state.password} secureTextEntry={true} underlineColorAndroid={'transparent'}></TextInput>
 
                 <TouchableOpacity style={styles.button}>
-                    <Text style={styles.btnText}>Sign up</Text>
+                    <Text style={styles.btnText} onPress={this.add}>Sign up</Text>
                 </TouchableOpacity>
             </View>
         )
+    }
+
+    //add a new user
+    add = () => {
+        const reg_data = JSON.stringify({
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password
+        });
+        const url = "http://192.168.10.12:3000/api/signup";
+        axios.post(url, reg_data).then((response) => {
+            console.log(response);
+        }, (error) => {
+            console.log(error);
+        });
     }
 }
 

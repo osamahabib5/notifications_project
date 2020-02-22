@@ -3,7 +3,7 @@ var path = require('path');
 var bodyparser = require('body-parser');
 
 var index = require('./routes/index');
-var bookings = require('./routes/bookings');
+var apis = require('./routes/bookings');
 
 var app = express();
 var port = 3000;
@@ -24,4 +24,4 @@ app.use(bodyparser.urlencoded({ extended: true }));
 
 //routes
 app.use("/", index);
-app.use("/api", bookings);
+app.use("/api", apis);
