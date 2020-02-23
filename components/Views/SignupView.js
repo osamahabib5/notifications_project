@@ -4,16 +4,17 @@ import {
 } from 'react-native';
 import axios from 'axios';
 export default class SignupForm extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state({
-            name: '',
-            email: '',
-            password: ''
-        })
+
+    state = {
+        name: '',
+        email: '',
+        password: ''
     }
+
     render() {
         return (
+
+
             <View style={styles.regform}>
                 <Text style={styles.header}>Registration</Text>
                 <TextInput style={styles.textinput} placeholder="Your Name"
