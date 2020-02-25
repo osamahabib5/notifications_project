@@ -84,9 +84,14 @@ export default class LoginView extends React.Component {
             email: this.state.email,
             password: this.state.password
         });
-        const url = "http://192.168.10.7:3000/api/verifylogin?data=" + email_data + "";
+        const url = "http://192.168.10.2:3000/api/verifylogin?data=" + email_data + "";
 
-        fetch(url)
+        fetch(url, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
+        })
             .then(response => {
                 if (response.status == 200) {
                     return response.text();

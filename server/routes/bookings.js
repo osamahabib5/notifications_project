@@ -30,8 +30,13 @@ router.get("/verifylogin", function (req, res) {
 });
 
 //addding new user 
-router.get("/signup"), function (req, res) {
-    console.log(req.query.reg_data);
-}
+router.post("/signup", function (req, res) {
+    console.log(req.query);
+    db.users.insertOne(req.query, function (err, res) {
+        if (err) throw err;
+        console.log("1 document inserted");
+        db.close();
+    });
+});
 
 module.exports = router;
