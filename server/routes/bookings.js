@@ -34,7 +34,7 @@ router.post("/signup", function (req, res) {
 
     var convert_reg_data = JSON.parse(JSON.stringify(req.body));
     var checkingemail = convert_reg_data.email;
-    console.log(convert_reg_data.password);
+    //console.log(convert_reg_data.password);
     var checkemailquery = {
         email: checkingemail
     };
@@ -45,12 +45,11 @@ router.post("/signup", function (req, res) {
             if (todos == "") {
                 db.users.insert(req.body, function (err, res) {
                     if (err) throw err;
-                    db.close();
                 });
-                console.log("Signup successful.");
+                res.send("Signup successful.");
             }
             else {
-                console.log("Email already exists.");
+                res.send("Email already exists.");
             }
         }
     });
