@@ -32,11 +32,32 @@ router.get("/verifylogin", function (req, res) {
 //addding new user 
 router.post("/signup", function (req, res) {
 
-    db.users.insert(req.body, function (err, res) {
-        if (err) throw err;
-        console.log("1 document inserted");
-        db.close();
+    var convert_reg_data = JSON.parse(JSON.stringify(req.body));
+    var checkingemail = convert_reg_data.email;
+    console.log(convert_reg_data.password);
+    var checkemailquery = {
+        email: checkingemail
+    };
+    db.users.find(checkemailquery).toArray(function (err, todos) {
+        if (err) {
+            res.send(err);
+        } else {
+            if (todos == "") {
+                db.users.insert(req.body, function (err, res) {
+                    if (err) throw err;
+                    db.close();
+                });
+                console.log("Signup successful.");
+            }
+            else {
+                console.log("Email already exists.");
+            }
+        }
     });
+    // db.users.insert(req.body, function (err, res) {
+    //     if (err) throw err;
+    //     db.close();
+    // });
 });
 
 module.exports = router;

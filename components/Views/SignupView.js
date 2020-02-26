@@ -33,18 +33,43 @@ export default class SignupForm extends React.Component {
     }
     //add a new user
     add = () => {
-        const reg_data = {
-            email: this.state.email,
-            password: this.state.password
-        };
-        const url = "http://192.168.10.3:3000/api/signup/";
+        const email_check = this.checkemail(this.state.email);
+        if (this.state.email != "" && this.state.password != "") {
+            if (email_check) {
+                const reg_data = {
+                    email: this.state.email,
+                    password: this.state.password
+                };
+                const url = "http://192.168.10.3:3000/api/signup/";
 
-        axios.post(url,
-            reg_data).then(res => console.log(res.data));
+                axios.post(url,
+                    reg_data)
+                    .then(response => {
+                        alert(response);
+                    });
+
+
+            }
+            else {
+                alert("Invalid Email Inserted.");
+            }
+        }
+        else {
+            alert("Please fill all the fields.");
+        }
         this.setState({
             email: '',
             password: ''
         });
+    }
+
+    //check if email is valid
+    checkemail = (check_email) => {
+        if (check_email.includes('@') && check_email.includes('.com')) {
+            return true;
+        }
+        alert("Invalid Email Inserted");
+        return;
     }
 }
 
