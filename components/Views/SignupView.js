@@ -14,7 +14,7 @@ export default class SignupForm extends React.Component {
     render() {
         return (
             <View style={styles.regform}>
-                <Text style={styles.header}>Registration</Text>
+                <Text style={styles.header}>SignUp</Text>
 
                 <TextInput style={styles.textinput} placeholder="Email"
                     onChangeText={(email) => this.setState({ email })}
@@ -33,36 +33,14 @@ export default class SignupForm extends React.Component {
     }
     //add a new user
     add = () => {
-        const reg_data = JSON.stringify({
+        const reg_data = {
             email: this.state.email,
             password: this.state.password
-        });
-        const url = "http://192.168.10.2:3000/api/signup/";
-        // axios.post(url, {
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Access-Control-Allow-Origin': '*'
-        //     }
-        // }, reg_data
-        // )
-        axios.post(url, {} /* <-- this guy */, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            params: reg_data
-        })
-            .then(function (response) {
-                if (response.status == 200) {
-                    return response.text();
-                }
-                else {
-                    throw new Error("wrong");
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        };
+        const url = "http://192.168.10.3:3000/api/signup/";
+
+        axios.post(url,
+            reg_data).then(res => console.log(res.data));
         this.setState({
             email: '',
             password: ''

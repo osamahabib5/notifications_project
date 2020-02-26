@@ -31,8 +31,8 @@ router.get("/verifylogin", function (req, res) {
 
 //addding new user 
 router.post("/signup", function (req, res) {
-    console.log(req.query);
-    db.users.insertOne(req.query, function (err, res) {
+
+    db.users.insert(req.body, function (err, res) {
         if (err) throw err;
         console.log("1 document inserted");
         db.close();
