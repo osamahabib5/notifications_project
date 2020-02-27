@@ -53,10 +53,6 @@ router.post("/signup", function (req, res) {
             }
         }
     });
-    // db.users.insert(req.body, function (err, res) {
-    //     if (err) throw err;
-    //     db.close();
-    // });
 });
 
 module.exports = router;

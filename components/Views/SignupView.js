@@ -8,7 +8,8 @@ export default class SignupForm extends React.Component {
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            response_message: ''
         }
     }
     render() {
@@ -45,8 +46,9 @@ export default class SignupForm extends React.Component {
                 axios.post(url,
                     reg_data)
                     .then(response => {
-                        alert(response);
+                        alert(response.data);
                     });
+
 
 
             }
