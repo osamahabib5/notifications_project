@@ -9,7 +9,7 @@ export default class SignupForm extends React.Component {
         this.state = {
             email: '',
             password: '',
-            response_message: ''
+            mobile_number: ''
         }
     }
     render() {
@@ -26,8 +26,16 @@ export default class SignupForm extends React.Component {
                     onChangeText={(password) => this.setState({ password })}
                     value={this.state.password} secureTextEntry={true} underlineColorAndroid={'transparent'}></TextInput>
 
+                <TextInput style={styles.textinput} placeholder="Mobile Number"
+                    onChangeText={(mobile_number) => this.setState({ mobile_number })}
+                    value={this.state.mobile_number} underlineColorAndroid={'transparent'}></TextInput>
+
                 <TouchableOpacity style={styles.button} onPress={this.add}>
                     <Text style={styles.btnText} >Sign up</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.button} onPress={this.add}>
+                    <Text style={styles.btnText} >Back</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -35,25 +43,28 @@ export default class SignupForm extends React.Component {
     //add a new user
     add = () => {
         const email_check = this.checkemail(this.state.email);
-        if (this.state.email != "" && this.state.password != "") {
-            if (email_check) {
+        const number_check = this.checknumber(this.state.mobile_number);
+        if (this.state.email != "" && this.state.password != "" && this.state.mobile_number != "") {
+            if (email_check && number_check) {
                 const reg_data = {
                     email: this.state.email,
-                    password: this.state.password
+                    password: this.state.password,
+                    mobile_number: this.state.mobile_number
                 };
                 const url = "http://192.168.10.3:3000/api/signup/";
-
                 axios.post(url,
                     reg_data)
                     .then(response => {
                         alert(response.data);
                     });
-
-
-
             }
             else {
-                alert("Invalid Email Inserted.");
+                if (!email_check) {
+                    alert("Invalid Email inserted!");
+                }
+                else {
+                    alert("The mobile number field should only contain numbers.");
+                }
             }
         }
         else {
@@ -61,7 +72,8 @@ export default class SignupForm extends React.Component {
         }
         this.setState({
             email: '',
-            password: ''
+            password: '',
+            mobile_number: ''
         });
     }
 
@@ -71,6 +83,15 @@ export default class SignupForm extends React.Component {
             return true;
         }
         alert("Invalid Email Inserted");
+        return;
+    }
+
+    //check if mobile number is valid
+    checknumber = (check_number) => {
+        if (!isNaN(check_number)) {
+            return true;
+        }
+        alert("Only numbers should be inserted!");
         return;
     }
 }
@@ -97,10 +118,13 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
     },
     button: {
-        alignSelf: 'stretch',
+        alignSelf: 'baseline',
         alignItems: 'center',
-        padding: 20,
+        padding: 10,
         backgroundColor: '#59cbbd',
         marginTop: 30,
+        width: 250,
+        marginLeft: 60,
+        borderRadius: 30
     }
 })
