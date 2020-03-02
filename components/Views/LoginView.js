@@ -20,7 +20,7 @@ export default class LoginView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '', password: '', response: "Hello world",
+            email: '', password: ''
         }
 
     }
@@ -29,9 +29,7 @@ export default class LoginView extends React.Component {
         console.log(this.props)
         return (
             <View style={styles.container}>
-                <View>
-                    <Text>{this.state.response}</Text>
-                </View>
+
                 <View style={styles.inputContainer}>
                     <Image style={styles.inputIcon} source={{ uri: 'https://png.icons8.com/message/ultraviolet/50/3498db' }} />
                     <TextInput style={styles.inputs}
@@ -84,14 +82,9 @@ export default class LoginView extends React.Component {
             email: this.state.email,
             password: this.state.password
         });
-        const url = "http://192.168.10.3:3000/api/verifylogin?data=" + email_data + "";
+        const url = "http://192.168.10.7:3000/api/verifylogin?data=" + email_data + "";
 
-        fetch(url, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            }
-        })
+        fetch(url)
             .then(response => {
                 if (response.status == 200) {
                     return response.text();
@@ -100,9 +93,7 @@ export default class LoginView extends React.Component {
                     throw new Error("wrong");
                 }
             }).then(responseText => {
-                this.setState({
-                    response: responseText
-                });
+                alert(responseText);
             }).catch(error => {
                 console.error(error.message);
             });

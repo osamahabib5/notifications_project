@@ -28,7 +28,7 @@ export default class SignupForm extends React.Component {
 
                 <TextInput style={styles.textinput} placeholder="Mobile Number"
                     onChangeText={(mobile_number) => this.setState({ mobile_number })}
-                    value={this.state.mobile_number} underlineColorAndroid={'transparent'}></TextInput>
+                    value={this.state.mobile_number} underlineColorAndroid={'transparent'} keyboardType="number-pad"></TextInput>
 
                 <TouchableOpacity style={styles.button} onPress={this.add}>
                     <Text style={styles.btnText} >Sign up</Text>
@@ -51,7 +51,7 @@ export default class SignupForm extends React.Component {
                     password: this.state.password,
                     mobile_number: this.state.mobile_number
                 };
-                const url = "http://192.168.10.3:3000/api/signup/";
+                const url = "http://192.168.10.7:3000/api/signup/";
                 axios.post(url,
                     reg_data)
                     .then(response => {
