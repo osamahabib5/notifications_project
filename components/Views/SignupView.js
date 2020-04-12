@@ -51,7 +51,7 @@ export default class SignupForm extends React.Component {
                     password: this.state.password,
                     mobile_number: this.state.mobile_number
                 };
-                const url = "http://192.168.10.7:3000/api/signup/";
+                const url = "http://192.168.10.4:3000/api/signup/";
                 axios.post(url,
                     reg_data)
                     .then(response => {

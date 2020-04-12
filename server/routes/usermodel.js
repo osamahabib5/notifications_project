@@ -8,6 +8,10 @@ let Todo = new Schema({
     },
     password: {
         type: String
+    },
+    productImage = {
+        type: String,
+        required: true
     }
 });
 

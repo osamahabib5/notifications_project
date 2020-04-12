@@ -9,18 +9,15 @@ import {
     Button,
     TouchableHighlight,
     Image,
-    Alert, AppRegistry, Navigator
+    Alert, AppRegistry, Navigator, TouchableOpacity
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import axios from 'axios';
-import Expo from 'expo';
-
+//import { NetworkInfo } from "react-native-network-info";
+//import { NetworkInfo } from 'react-native-network-info';
 export default class LoginView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '', password: ''
+            email: '', password: '', DeviceIMEI: ''
         }
 
     }
@@ -30,6 +27,7 @@ export default class LoginView extends React.Component {
         return (
             <View style={styles.container}>
 
+                <Text>{this.state.DeviceIMEI}</Text>
                 <View style={styles.inputContainer}>
                     <Image style={styles.inputIcon} source={{ uri: 'https://png.icons8.com/message/ultraviolet/50/3498db' }} />
                     <TextInput style={styles.inputs}
@@ -59,7 +57,7 @@ export default class LoginView extends React.Component {
                     <Text style={styles.loginText}>Login</Text>
                 </TouchableHighlight>
 
-                <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('restore_password')}>
+                <TouchableHighlight style={styles.buttonContainer} >
                     <Text>Forgot your password?</Text>
                 </TouchableHighlight>
 
@@ -82,7 +80,7 @@ export default class LoginView extends React.Component {
             email: this.state.email,
             password: this.state.password
         });
-        const url = "http://192.168.10.7:3000/api/verifylogin?data=" + email_data + "";
+        const url = "http://192.168.10.4:3000/api/verifylogin?data=" + email_data + "";
 
         fetch(url)
             .then(response => {
