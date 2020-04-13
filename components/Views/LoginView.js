@@ -11,23 +11,25 @@ import {
     Image,
     Alert, AppRegistry, Navigator, TouchableOpacity
 } from 'react-native';
-//import { NetworkInfo } from "react-native-network-info";
-//import { NetworkInfo } from 'react-native-network-info';
 export default class LoginView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '', password: '', DeviceIMEI: ''
+            email: '', password: '', imageUrl: ''
         }
 
     }
     render() {
         const { navigate } = this.props.navigation;
-        console.log(this.props)
         return (
             <View style={styles.container}>
-
-                <Text>{this.state.DeviceIMEI}</Text>
+                <Image
+                    source={{ uri: "http://192.168.10.3:3000" + this.state.imageUrl }}
+                    style={{
+                        width: 100,
+                        height: 100
+                    }}
+                />
                 <View style={styles.inputContainer}>
                     <Image style={styles.inputIcon} source={{ uri: 'https://png.icons8.com/message/ultraviolet/50/3498db' }} />
                     <TextInput style={styles.inputs}
@@ -80,7 +82,7 @@ export default class LoginView extends React.Component {
             email: this.state.email,
             password: this.state.password
         });
-        const url = "http://192.168.10.4:3000/api/verifylogin?data=" + email_data + "";
+        const url = "http://192.168.10.3:3000/api/verifylogin?data=" + email_data + "";
 
         fetch(url)
             .then(response => {
@@ -91,7 +93,9 @@ export default class LoginView extends React.Component {
                     throw new Error("wrong");
                 }
             }).then(responseText => {
-                alert(responseText);
+                this.setState({
+                    imageUrl: responseText
+                })
             }).catch(error => {
                 console.error(error.message);
             });

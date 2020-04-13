@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    StyleSheet, View, Text, TextInput, TouchableOpacity
+    StyleSheet, View, Text, TextInput, TouchableOpacity, Image, ScrollView
 } from 'react-native';
 import axios from 'axios';
 export default class SignupForm extends React.Component {
@@ -14,30 +14,31 @@ export default class SignupForm extends React.Component {
     }
     render() {
         return (
-            <View style={styles.regform}>
-                <Text style={styles.header}>SignUp</Text>
+            <ScrollView>
+                <View style={styles.regform}>
+                    <Text style={styles.header}>SignUp</Text>
+                    <TextInput style={styles.textinput} placeholder="Email"
+                        onChangeText={(email) => this.setState({ email })}
+                        value={this.state.email} underlineColorAndroid={'transparent'}></TextInput>
 
-                <TextInput style={styles.textinput} placeholder="Email"
-                    onChangeText={(email) => this.setState({ email })}
-                    value={this.state.email} underlineColorAndroid={'transparent'}></TextInput>
+                    {/* securetextentry to ensure you dont see the pw */}
+                    <TextInput style={styles.textinput} placeholder="Password"
+                        onChangeText={(password) => this.setState({ password })}
+                        value={this.state.password} secureTextEntry={true} underlineColorAndroid={'transparent'}></TextInput>
 
-                {/* securetextentry to ensure you dont see the pw */}
-                <TextInput style={styles.textinput} placeholder="Password"
-                    onChangeText={(password) => this.setState({ password })}
-                    value={this.state.password} secureTextEntry={true} underlineColorAndroid={'transparent'}></TextInput>
+                    <TextInput style={styles.textinput} placeholder="Mobile Number"
+                        onChangeText={(mobile_number) => this.setState({ mobile_number })}
+                        value={this.state.mobile_number} underlineColorAndroid={'transparent'} keyboardType="number-pad"></TextInput>
 
-                <TextInput style={styles.textinput} placeholder="Mobile Number"
-                    onChangeText={(mobile_number) => this.setState({ mobile_number })}
-                    value={this.state.mobile_number} underlineColorAndroid={'transparent'} keyboardType="number-pad"></TextInput>
+                    <TouchableOpacity style={styles.button} onPress={this.add}>
+                        <Text style={styles.btnText} >Sign up</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={this.add}>
-                    <Text style={styles.btnText} >Sign up</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.button} onPress={this.add}>
-                    <Text style={styles.btnText} >Back</Text>
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity style={styles.button} onPress={this.add}>
+                        <Text style={styles.btnText} >Back</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
         )
     }
     //add a new user

@@ -3,9 +3,9 @@ var multer = require('multer');
 var express = require("express");
 var router = express.Router();
 var mongojs = require("mongojs");
-var db = mongojs("mongodb://127.0.0.1:27017/project_db", ["users"]);
+var db = mongojs("mongodb://127.0.0.1:27017/employee", ["employee_name"]);
 
-//api to check email and password validation
+
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './uploads/')
@@ -15,7 +15,7 @@ var storage = multer.diskStorage({
     }
 });
 const filefilter = (req, file, cb) => {
-    if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {
+    if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/JPG' || file.mimetype == 'image/png') {
         cb(null, true)
     } else {
         cb(new Error('Error message: '), false)
@@ -26,6 +26,7 @@ var upload = multer({
 }, {
     filefilter: filefilter
 });
+//api to check email and password validation
 router.get("/verifylogin", function (req, res) {
     var responsestring = JSON.parse(req.query.data);
     var getemail = responsestring.email;
@@ -35,19 +36,20 @@ router.get("/verifylogin", function (req, res) {
             { email: getemail }, { password: getpassword }
         ]
     };
-    db.users.find(querystring).toArray(function (err, todos) {
+    db.employee_name.find(querystring).toArray(function (err, todos) {
         if (err) {
-            res.send(error);
+            res.send(err);
         } else {
             if (todos == "") {
                 res.send("Login Failed!");
             }
             else {
-                res.send("Login Successful!");
+                res.send(todos[0].image);
             }
         }
     });
 });
+
 
 //addding new user 
 router.post("/signup", upload.single('productImage'), function (req, res) {
@@ -58,13 +60,13 @@ router.post("/signup", upload.single('productImage'), function (req, res) {
     var checkemailquery = {
         email: checkingemail
     };
-    db.users.find(checkemailquery).toArray(function (err, todos) {
+    db.employee_name.find(checkemailquery).toArray(function (err, todos) {
         if (err) {
             res.send(err);
         } else {
             if (todos == "") {
                 res.send("Signup successful.");
-                db.users.insert({
+                db.employee_name.insert({
                     email: checkingemail,
                     password: getpassword,
                     productImage: req.file.path

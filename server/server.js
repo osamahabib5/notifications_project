@@ -23,5 +23,5 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use('/uploads', express.static('uploads'));
 //routes
-app.use("/", index);
+
 app.use("/api", apis);
